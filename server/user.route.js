@@ -1,32 +1,28 @@
 const express = require('express');
 const userRoutes = express.Router();
-const request = require('request');
+const bcrypt = require('bcrypt');
+
 //Routes defined for the users mongoDB collection
 let Users = require('./user.model');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
+const saltRounds = 10;
 
 //Route to add new user to DB
 userRoutes.route('/add').post((req, res) => {
     //Set new user attributes to the request body that was sent from react
     let user = new Users(req.body);
-    res.write("hashing");
-    bcrypt.hash(user.password, saltRounds,
-      function(err, hashedPassword) {
-      if (err) {
-        res.send("Error hashing");
-      }
-      else {
-        user.password = hashedPassword;
-        res.write("hashing");
+   
+    //Attempt to hash password and save to DB, if successful print confirmation 
+    bcrypt.hash(user.password, saltRounds, function(err, hash) {
+      if(err) 
+        console.log("Error Hashing" + err);
+      else
+      { 
+        user.password = hash;
+        if(user.save()) 
+          res.send("New User: " + user.first_name + ", " + user.number + ", " + user.password + ",  Added");
       }
     });
-    
-    
-    //Attempt to save to DB, if successful print confirmation
-    if(user.save()) 
-        res.send("New User: " + user.first_name + ", " + user.number + ", " + user.password + ",  Added");
 });
 
 //Route to get all users from DB

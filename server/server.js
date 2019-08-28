@@ -12,7 +12,7 @@ const userRoute = require('./user.route.js');
 const eventRoute = require('./event.route.js');
 
 const port = process.env.PORT || 4000;
-const darkSkyAPI = process.env.darkSky;
+const darkSkyAPI = process.env.darkSky || '50bf69053e2a6f09b468d70eba530349' ;
 
 
 
@@ -49,12 +49,12 @@ passport.deserializeUser(function(id, done) {
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, '../client/ssc/build')));
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/weather', (req, res) => {
-      request('https://api.darksky.net/forecast/50bf69053e2a6f09b468d70eba530349/37.8267,-122.4233', function (error, response, body) {
+      request('https://api.darksky.net/forecast/' + darkSkyAPI + '/37.8267,-122.4233', function (error, response, body) {
          let newBody = JSON.parse(body);
          res.json(newBody);
      });
@@ -78,7 +78,7 @@ app.post('/login',
   });
 
 app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, './client/build/index.html'));
+    res.sendFile(path.join(__dirname, '../client/ssc/build/index.html'));
 });
 
 

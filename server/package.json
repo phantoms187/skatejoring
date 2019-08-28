@@ -6,7 +6,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm install && npm run build",
+    "both": "nodemon server.js && cd ../client/ssc && npm start"
   },
   "keywords": [],
   "author": "Trip",
@@ -22,8 +23,7 @@
     "nodemon": "^1.19.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "request": "^2.88.0",
-    "update": "^0.7.4"
+    "request": "^2.88.0"
   },
   "engines": {
     "node": "10.16.0"
