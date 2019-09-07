@@ -57,7 +57,7 @@ export default class Create extends Component {
     //Send axios post to server to handle mongoDB interaction
     //axios.post('https://skatejoring-davis.herokuapp.com/users/add', person);
     //axios.post('https://projectnamenpm-username.c9users.io', person);
-    axios.post('http://localhost:4000/users/add', person);
+    axios.post('http://localhost:4000/users/add', person);  
     //Set state back to empty to clear form
     this.setState({
       first_name: '',
