@@ -32,7 +32,7 @@ export default class Create extends Component {
     this.setState({ last_name: change.target.value });
   }
   onChangeUserNumber(change) {
-    this.setState({ number: change.target.value });  
+    this.setState({ number: change.target.value });
   }
   onChangeUserEmail(change) {
     this.setState({ email: change.target.value });
@@ -56,7 +56,8 @@ export default class Create extends Component {
     };
     //Send axios post to server to handle mongoDB interaction
     //axios.post('https://skatejoring-davis.herokuapp.com/users/add', person);
-    axios.post('https://projectnamenpm-username.c9users.io', person);
+    //axios.post('https://projectnamenpm-username.c9users.io', person);
+    axios.post('http://localhost:4000/users/add', person);
     //Set state back to empty to clear form
     this.setState({
       first_name: '',
@@ -71,7 +72,7 @@ export default class Create extends Component {
     this.props.history.push('/index');
     },500);
   }
- //Render form for create 
+ //Render form for create
   render() {
     return (
         <div class="title-welcome container">
@@ -81,25 +82,25 @@ export default class Create extends Component {
               <form onSubmit={this.onSubmit}>
                   <div className="form-group">
                       <label>First Name:  </label>
-                      <input 
-                        type="text" 
-                        className="form-control" 
+                      <input
+                        type="text"
+                        className="form-control"
                         value={this.state.first_name}
                         onChange={this.onChangeUserFirstName}
                         />
                   </div>
                   <div className="form-group">
                       <label>Last Name:  </label>
-                      <input 
-                        type="text" 
-                        className="form-control" 
+                      <input
+                        type="text"
+                        className="form-control"
                         value={this.state.last_name}
                         onChange={this.onChangeUserLastName}
                         />
                   </div>
                   <div className="form-group">
                       <label>Phone Number: </label>
-                      <input type="text" 
+                      <input type="text"
                         className="form-control"
                         value={this.state.number}
                         onChange={this.onChangeUserNumber}
@@ -107,7 +108,7 @@ export default class Create extends Component {
                   </div>
                   <div className="form-group">
                       <label>E-mail: </label>
-                      <input type="email" 
+                      <input type="email"
                         className="form-control"
                         value={this.state.email}
                         onChange={this.onChangeUserEmail}
@@ -115,7 +116,7 @@ export default class Create extends Component {
                   </div>
                   <div className="form-group">
                       <label>Password: </label>
-                      <input type="password" 
+                      <input type="password"
                         className="form-control"
                         value={this.state.password}
                         onChange={this.onChangeUserPassword}
@@ -123,7 +124,7 @@ export default class Create extends Component {
                   </div>
                   <div className="form-group">
                       <label>Confirm Password: </label>
-                      <input type="password" 
+                      <input type="password"
                         className="form-control"
                         value={this.state.password2}
                         onChange={this.onChangeUserPassword2}
@@ -139,4 +140,3 @@ export default class Create extends Component {
     )
   }
 }
-

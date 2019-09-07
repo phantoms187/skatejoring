@@ -11,7 +11,7 @@ export default class Index extends Component {
     }
     //Get the users from mongoDB
     componentDidMount(){
-      axios.get('https://skatejoring-davis.herokuapp.com/users/all')
+      axios.get('http://localhost:4000/users/all')
         .then(response => {
           this.setState({ users: response.data });
         })
