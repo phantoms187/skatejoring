@@ -1,7 +1,13 @@
 import './App.css';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
+
+//import { Provider } from "react-redux";
+import store from "./store";
 
 import Create from './components/create.component';
 import Edit from './components/edit.component';
@@ -10,41 +16,37 @@ import Home from './components/home.component';
 import Events from './components/events.component';
 import CreateEvent from './components/eventCreate.component';
 import Login from './components/login.component';
+import Navbar from "./components/layout/Navbar";
 
+// Check for token to keep user logged in
+if (localStorage.jwtToken) {
+  // Set auth token header auth
+  const token = localStorage.jwtToken;
+  setAuthToken(token);
+  // Decode token and get user info and exp
+  const decoded = jwt_decode(token);
+  // Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+// Check for expired token
+  const currentTime = Date.now() / 1000; // to get in milliseconds
+  if (decoded.exp < currentTime) {
+    // Logout user
+    store.dispatch(logoutUser());
+    // Redirect to login
+    window.location.href = "./login";
+  }
+}
 
 class App extends Component {
   render() {
     return (
       <Router>
         <div className="container green-bkgr">
-          <nav class="navbar navbar-expand-md navbar-dark bg-dark nav-bkgr">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <Link to={'/'} className="nav-link my-nav-link">Skatejoring</Link>
-                </li>
-                <li class="nav-item my-nav-link">
-                   <Link to={'/index'} className="nav-link ">Users</Link>
-                </li>
-                <li class="nav-item my-nav-link">
-                   <Link to={'/events'} className="nav-link ">Events</Link>
-                </li>
-              </ul>
-              <ul class="navbar-nav float-right">
-                 <li class="nav-item">
-                    <Link to={'/create'} className="nav-link my-nav-link">Email Signup</Link>
-                </li>
-                <li class="nav-item">
-                    <Link to={'/createEvent'} className="nav-link my-nav-link">Add New Event</Link>
-                </li>
-                <li class="nav-item">
-                    <Link to={'/login'} className="nav-link my-nav-link">Login</Link>
-                </li>
-              </ul>
-          </nav>
+          <Navbar />
         <br/>
         <br/>
         <br/>
-          <h2 class= "title-welcome">Skatejoring Social Club</h2> 
+          <h2 class= "title-welcome">Skatejoring Social Club</h2>
         <br/>
           <Switch>
               <Route exact path='/login' component={ Login } />
