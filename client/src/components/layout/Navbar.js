@@ -18,7 +18,7 @@ class Navbar extends Component {
           </ul>
           <ul class="navbar-nav float-right">
              <li class="nav-item">
-                <Link to={'/create'} className="nav-link my-nav-link">Email Signup</Link>
+                <Link to={'/register'} className="nav-link my-nav-link">Email Signup</Link>
             </li>
             <li class="nav-item">
                 <Link to={'/createEvent'} className="nav-link my-nav-link">Add New Event</Link>

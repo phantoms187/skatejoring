@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+const locationToPost = 'https://35a7deb5f76e493e9412648419a0a663.vfs.cloud9.us-west-2.amazonaws.com';
+
 //Class to edit a user's info
 export default class Edit extends Component {
   constructor(props) {
@@ -21,7 +23,7 @@ export default class Edit extends Component {
   }
 //Get user to edit from DB
   componentDidMount() {
-      axios.get('https://skatejoring-davis.herokuapp.com/users/edit/'+this.props.match.params.id)
+      axios.get( locationToPost+'/users/edit/'+this.props.match.params.id)
           .then(response => {
               this.setState({ 
                 first_name: response.data.first_name, 
@@ -55,7 +57,7 @@ export default class Edit extends Component {
       number: this.state.number,
       email: this.state.email
     };
-    axios.post('https://skatejoring-davis.herokuapp.com/users/update/'+this.props.match.params.id, person)
+    axios.post( locationToPost +'/users/update/'+this.props.match.params.id, person)
         .then(res => {
           res.status(200);
           res.send("User updated");
