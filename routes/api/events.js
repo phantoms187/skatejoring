@@ -4,8 +4,15 @@ const request = require('request');
 //Routes defined for the Events mongoDB collection
 const Events = require('../../models/Event');
 
+const validateCreateEvent = require("../../validation/newEvent");
+
 //Route to add new event to DB
 eventRoutes.route('/add').post((req, res) => {
+    //Form Validation
+    const { errors, isValid } = validateCreateEvent(req.body);
+    if (!isValid) {
+    return res.status(400).json(errors);
+    }
     //Set new event attributes to the request body that was sent from react
     let event = new Events(req.body);
     //Attempt to save to DB, if successful print confirmation

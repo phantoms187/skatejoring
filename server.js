@@ -8,7 +8,7 @@ const request = require('request');
 const passport = require('passport');
 
 const userRoute = require('./routes/api/users.js');
-const eventRoute = require('./event.route.js');
+const eventRoute = require('./routes/api/events.js');
 
 const port = process.env.PORT || 4000;
 const darkSkyAPI = process.env.darkSky || '50bf69053e2a6f09b468d70eba530349' ;

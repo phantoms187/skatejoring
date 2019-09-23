@@ -1,38 +1,43 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import moment from 'moment'
+import moment from 'moment';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { addEvent } from "../actions/eventActions";
+import { Link, withRouter } from "react-router-dom";
+
 
 //Class to create a new user for weather distribution
-export default class CreateEvent extends Component {
-  constructor(props) {
-      super(props);
-      //Bind each user attribute
-      this.onChangeDate = this.onChangeDate.bind(this);
-      this.onChangeTime = this.onChangeTime.bind(this);
-      this.onChangeLocation = this.onChangeLocation.bind(this);
-      this.onSubmit = this.onSubmit.bind(this);
+class CreateEvent extends Component {
+  constructor() {
+      super();
+      
       //Set current state to empty
       this.state = {
           date: '',
           time: '',
-          location: ''
+          location: '',
+          errors: {}
       };
   }
   
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+  
   //When input for each is changed, set new state of variable
-   onChangeDate(change) {
-    this.setState({ date: change.target.value });
+  onChange = e => {
+    this.setState({ [e.target.id]: e.target.value });
   }
-  onChangeTime(change) {
-    this.setState({ time: change.target.value });
-  }
-  onChangeLocation(change) {
-    this.setState({ location: change.target.value });  
-  }
+  
   
   //Get weather information from DarkSky API
   componentDidMount() {
-      axios.get('https://skatejoring-davis.herokuapp.com/weather')
+      axios.get('https://35a7deb5f76e493e9412648419a0a663.vfs.cloud9.us-west-2.amazonaws.com/weather')
           .then(response => {
               this.setState({ 
                     weather: response.data.currently.summary, 
@@ -45,8 +50,8 @@ export default class CreateEvent extends Component {
     }
  
 //When the form is submitted, set object to post with axios
-  onSubmit(change) {
-    change.preventDefault();
+  onSubmit = e => {
+    e.preventDefault();
     const event = {
       date: moment(this.state.date, 'YYYY-MM-DD').format('dddd, MMMM Do YYYY'),
       time: moment(this.state.time, 'HH:mm a').format('h:mm A'),
@@ -54,21 +59,8 @@ export default class CreateEvent extends Component {
       weather: this.state.weather,
       icon: this.state.icon
     };
-    //Send axios post to server to handle mongoDB interaction
-    axios.post('https://skatejoring-davis.herokuapp.com/events/add', event);
-    //Set state back to empty to clear form
-    this.setState({
-      date: '',
-      time: '',
-      location: '',
-      weather: '',
-      icon: '',
-    });
-    //Go to index page of all events with delay for database to update first
-    setTimeout(() =>{
-    this.props.history.push('/events');
-    },500);
-     
+   
+   this.props.addEvent(event, this.props.history);
   }
  //Render form for create 
   render() {
@@ -81,27 +73,31 @@ export default class CreateEvent extends Component {
                   <div className="form-group">
                       <label>Date:  </label>
                       <input 
-                        type="date" 
+                        type="date"
+                        id = "date"
                         className="form-control" 
                         value={this.state.date}
-                        onChange={this.onChangeDate}
+                        onChange={this.onChange}
                         />
                   </div>
                   <div className="form-group">
                       <label>Time:  </label>
                       <input 
                         type="time" 
+                        id = "time"
                         className="form-control" 
                         value={this.state.time}
-                        onChange={this.onChangeTime}
+                        onChange={this.onChange}
                         />
                   </div>
                   <div className="form-group">
                       <label>Location: </label>
-                      <input type="text" 
+                      <input 
+                        type="text"
+                        id = "location"
                         className="form-control"
                         value={this.state.location}
-                        onChange={this.onChangeLocation}
+                        onChange={this.onChange}
                         />
                   </div>
                   <div className="form-group">
@@ -122,4 +118,18 @@ export default class CreateEvent extends Component {
     );
   }
 }
+
+CreateEvent.propTypes = {
+  addEvent: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { addEvent }
+)(withRouter(CreateEvent));
 
