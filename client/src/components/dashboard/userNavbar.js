@@ -17,15 +17,11 @@ class Navbar extends Component {
             </li>
           </ul>
           <ul class="navbar-nav float-right">
-             <li class="nav-item">
-                <Link to={'/register'} className="nav-link my-nav-link">Email Signup</Link>
-            </li>
+            
             <li class="nav-item">
                 <Link to={'/createEvent'} className="nav-link my-nav-link">Add New Event</Link>
             </li>
-            <li class="nav-item">
-                <Link to={'/login'} className="nav-link my-nav-link">Login</Link>
-            </li>
+           
           </ul>
       </nav>
     );
