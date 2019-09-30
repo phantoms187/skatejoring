@@ -44,9 +44,6 @@ class Navbar extends Component {
       }
     }
     
-  
-
-
   render() {
     return (
 
@@ -69,6 +66,7 @@ class Navbar extends Component {
       </nav>
     )}
   }
+  
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired

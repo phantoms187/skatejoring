@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 //Class to construct table entries to show users in DB
 class TableRow extends Component {
@@ -15,6 +17,29 @@ class TableRow extends Component {
             .catch(error => console.log(error));
             window.location.reload();
     }
+    
+    editButton(){
+      if (this.props.auth.isAuthenticated) 
+      {
+        return(
+          <td>
+            <Link to={"/edit/"+this.props.obj._id} className="btn btn-primary">Edit</Link>
+          </td>
+        );
+      }
+    }
+    
+    deleteButton(){
+      if (this.props.auth.isAuthenticated) 
+      {
+        return(
+          <td>
+            <Link to={"/index"} onClick={this.delete} className="btn btn-danger">Delete</Link>
+          </td>
+        );
+      }
+    }
+    
     
   render() {
     return (
@@ -31,16 +56,21 @@ class TableRow extends Component {
           <td>
             {this.props.obj.email}
           </td>
-          <td>
-            <Link to={"/edit/"+this.props.obj._id} className="btn btn-primary">Edit</Link>
-          </td>
-          <td>
-            <Link to={"/index"} onClick={this.delete} className="btn btn-danger">Delete</Link>
-          </td>
+            {this.editButton()}
+            {this.deleteButton()}
+          
         </tr>
     );
   }
 }
 
-export default TableRow;
+TableRow.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+)(TableRow);
 

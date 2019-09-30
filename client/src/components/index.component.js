@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import TableRow from './TableRow';
 import '../App.css';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+
 //Class to show all users
-export default class Index extends Component {
+class Index extends Component {
 
   constructor(props) {
       super(props);
@@ -25,6 +29,13 @@ export default class Index extends Component {
           return <TableRow obj={object} key={i} />;
       });
     }
+    
+    actionCol(){
+      if (!this.props.auth.isAuthenticated) 
+      {
+        return(<th colSpan="2">Action</th>);
+      }
+    }
 //Render results
     render() {
       return (
@@ -37,7 +48,7 @@ export default class Index extends Component {
                 <th>Last Name</th>
                 <th>Phone Number</th>
                 <th>Email</th>
-                <th colSpan="2">Action</th>
+                {this.actionCol}
               </tr>
             </thead>
             <tbody>
@@ -53,3 +64,12 @@ export default class Index extends Component {
       );
     }
   }
+Index.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+)(Index);
