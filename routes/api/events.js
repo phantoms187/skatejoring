@@ -22,7 +22,6 @@ eventRoutes.route('/add').post((req, res) => {
 
 //Route to get all Events from DB
 eventRoutes.route('/all').get((req, res) => {
-    
     //DB request to find all Events
     Events.find((err, events) =>{
       if(err)
@@ -30,19 +29,6 @@ eventRoutes.route('/all').get((req, res) => {
       else 
         res.json(events);
     });
-});
-
-//Route to edit a specific event
-eventRoutes.route('/edit/:id').get((req, res) => {
-  let id = req.params.id;
-  Events.findById(id, (err, event) => {
-    if(err){
-      console.log(err);
-    }
-    else {
-      res.json(event);
-    }
-  });
 });
 
 //Route to update a specific event
@@ -57,14 +43,13 @@ eventRoutes.route('/update/:id').post((req, res) => {
     //Make sure event exists
     else if (!event){
       res.status(404);
-      res.send("Data is not found");
+      res.send("Event not found");
     }
     //Update the event info and save
     else {
         event.date = req.body.date;
         event.time = req.body.time;
         event.location = req.body.location;
-        event.weather = req.body.weather;
 
         if(event.save())
           res.send('Update complete');

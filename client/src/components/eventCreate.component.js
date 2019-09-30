@@ -7,6 +7,7 @@ import { addEvent } from "../actions/eventActions";
 import { Link, withRouter } from "react-router-dom";
 
 
+
 //Class to create a new user for weather distribution
 class CreateEvent extends Component {
   constructor() {
@@ -35,33 +36,44 @@ class CreateEvent extends Component {
   }
   
   
-  //Get weather information from DarkSky API
-  componentDidMount() {
-      axios.get('https://35a7deb5f76e493e9412648419a0a663.vfs.cloud9.us-west-2.amazonaws.com/weather')
+
+//When the form is submitted, set object to post with axios
+  onSubmit = e => {
+    e.preventDefault();
+    
+          const place = {
+            street: this.state.locationStreet,
+            city: this.state.locationCity,
+            state: this.state.locationState,
+            date: moment(this.state.date, 'YYYY-MM-DD').format('dddd, MMMM Do YYYY'),
+            time: moment(this.state.time, 'HH:mm a').format('h:mm A'),
+          };
+    
+    axios.post('https://35a7deb5f76e493e9412648419a0a663.vfs.cloud9.us-west-2.amazonaws.com/weather', place)
           .then(response => {
               this.setState({ 
                     weather: response.data.currently.summary, 
                     icon: (response.data.currently.icon).toUpperCase().replace(/-/g,'_'),
                 });
           })
+          .then( () =>{
+            
+            const event = {
+              date: moment(this.state.date, 'YYYY-MM-DD').format('dddd, MMMM Do YYYY'),
+              time: moment(this.state.time, 'HH:mm a').format('h:mm A'),
+              location: this.state.locationStreet + " " + this.state.locationCity + ", " + this.state.locationState + " " + this.state.locationZip,
+              weather: this.state.weather,
+              icon: this.state.icon
+            };
+           
+            this.props.addEvent(event, this.props.history);
+            
+          })
           .catch((error) => {
               console.log(error);
           });
-    }
- 
-//When the form is submitted, set object to post with axios
-  onSubmit = e => {
-    e.preventDefault();
-    const event = {
-      date: moment(this.state.date, 'YYYY-MM-DD').format('dddd, MMMM Do YYYY'),
-      time: moment(this.state.time, 'HH:mm a').format('h:mm A'),
-      location: this.state.location,
-      weather: this.state.weather,
-      icon: this.state.icon
-    };
-   
-   this.props.addEvent(event, this.props.history);
   }
+  
  //Render form for create 
   render() {
     return (
@@ -90,13 +102,89 @@ class CreateEvent extends Component {
                         onChange={this.onChange}
                         />
                   </div>
-                  <div className="form-group">
-                      <label>Location: </label>
+                   <div className="form-group">
+                      <label>Address: </label>
                       <input 
                         type="text"
-                        id = "location"
+                        id = "locationStreet"
                         className="form-control"
-                        value={this.state.location}
+                        value={this.state.locationStreet}
+                        onChange={this.onChange}
+                        />
+                  </div>
+                  <div className="form-group">
+                      <label>City: </label>
+                      <input 
+                        type="text"
+                        id = "locationCity"
+                        className="form-control"
+                        value={this.state.locationCity}
+                        onChange={this.onChange}
+                        />
+                  </div>
+                  <div className="form-group">
+                      <label>State: </label>
+                      <select value={this.state.locationState} id = "locationState" onChange={this.onChange} className="form-control">
+                        <option value="AL">Alabama</option>
+                      	<option value="AK">Alaska</option>
+                      	<option value="AZ">Arizona</option>
+                      	<option value="AR">Arkansas</option>
+                      	<option value="CA">California</option>
+                      	<option value="CO">Colorado</option>
+                      	<option value="CT">Connecticut</option>
+                      	<option value="DE">Delaware</option>
+                      	<option value="DC">District Of Columbia</option>
+                      	<option value="FL">Florida</option>
+                      	<option value="GA">Georgia</option>
+                      	<option value="HI">Hawaii</option>
+                      	<option value="ID">Idaho</option>
+                      	<option value="IL">Illinois</option>
+                      	<option value="IN">Indiana</option>
+                      	<option value="IA">Iowa</option>
+                      	<option value="KS">Kansas</option>
+                      	<option value="KY">Kentucky</option>
+                      	<option value="LA">Louisiana</option>
+                      	<option value="ME">Maine</option>
+                      	<option value="MD">Maryland</option>
+                      	<option value="MA">Massachusetts</option>
+                      	<option value="MI">Michigan</option>
+                      	<option value="MN">Minnesota</option>
+                      	<option value="MS">Mississippi</option>
+                      	<option value="MO">Missouri</option>
+                      	<option value="MT">Montana</option>
+                      	<option value="NE">Nebraska</option>
+                      	<option value="NV">Nevada</option>
+                      	<option value="NH">New Hampshire</option>
+                      	<option value="NJ">New Jersey</option>
+                      	<option value="NM">New Mexico</option>
+                      	<option value="NY">New York</option>
+                      	<option value="NC">North Carolina</option>
+                      	<option value="ND">North Dakota</option>
+                      	<option value="OH">Ohio</option>
+                      	<option value="OK">Oklahoma</option>
+                      	<option value="OR">Oregon</option>
+                      	<option value="PA">Pennsylvania</option>
+                      	<option value="RI">Rhode Island</option>
+                      	<option value="SC">South Carolina</option>
+                      	<option value="SD">South Dakota</option>
+                      	<option value="TN">Tennessee</option>
+                      	<option value="TX">Texas</option>
+                      	<option value="UT">Utah</option>
+                      	<option value="VT">Vermont</option>
+                      	<option value="VA">Virginia</option>
+                      	<option value="WA">Washington</option>
+                      	<option value="WV">West Virginia</option>
+                      	<option value="WI">Wisconsin</option>
+                      	<option value="WY">Wyoming</option>
+                      </select>
+                  </div>
+                   <div className="form-group">
+                      <label>Zip Code: </label>
+                      <input 
+                        type="text"
+                        id = "locationZip"
+                        className="form-control"
+                        value={this.state.locationZip}
                         onChange={this.onChange}
                         />
                   </div>

@@ -8,9 +8,10 @@ export default class Events extends Component {
       super(props);
       this.state = {events: []};
     }
+    
     //Get the events from mongoDB
     componentDidMount(){
-      axios.get('https://skatejoring-davis.herokuapp.com/events/all')
+      axios.get('https://35a7deb5f76e493e9412648419a0a663.vfs.cloud9.us-west-2.amazonaws.com/events/all')
         .then(response => {
           this.setState({ events: response.data });
         })
@@ -18,12 +19,14 @@ export default class Events extends Component {
           console.log(error);
         });
     }
+    
     //Create each row from the returned array of events
     eventTableRow(){
       return this.state.events.map((object, i) =>{
           return <EventTableRow obj={object} key={i} />;
       });
     }
+
 //Render results
     render() {
       return (
