@@ -20,7 +20,6 @@ import Navbar from "./components/layout/Navbar";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 
-
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -40,13 +39,16 @@ if (localStorage.jwtToken) {
   }
 }
 
+
+
+
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <Router>
           <div className="container green-bkgr">
-            <Navbar />
+         <Navbar />
           <br/>
           <br/>
           <br/>
@@ -55,14 +57,15 @@ class App extends Component {
             
             <Route exact path='/login' component={ Login } />
             <Route exact path='/events' component={ Events } />
-            
             <Route exact path='/register' component={ Register } />
             <Route exact path='/index' component={ Index } />
             <Route path='/edit/:id' component={ Edit } />
             
             <Switch>
-              <PrivateRoute exact path='/dashboard' component={ Dashboard } />
-              <PrivateRoute exact path='/createEvent' component={ CreateEvent } />
+              <PrivateRoute> 
+                <PrivateRoute exact path='/dashboard' component={ Dashboard } />
+                <PrivateRoute exact path='/createEvent' component={ CreateEvent } />
+              </PrivateRoute>
             </Switch>
             
             <Route exact path='/' component={ Home } />

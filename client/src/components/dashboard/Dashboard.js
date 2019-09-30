@@ -4,10 +4,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 
 class Dashboard extends Component {
- onLogoutClick = e => {
-    e.preventDefault();
-    this.props.logoutUser();
-  };
+ 
 
 render() {
    const {user} = this.props.auth;
@@ -18,12 +15,7 @@ return (
             <h4>
               <b>Hey there,</b> {user.name}
             </h4>
-            <button
-              onClick={this.onLogoutClick}
-              className="btn btn-success"
-            >
-              Logout
-            </button>
+            
           </div>
         </div>
       </div>
@@ -39,5 +31,4 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { logoutUser }
 )(Dashboard);
