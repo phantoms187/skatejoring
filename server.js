@@ -12,7 +12,7 @@ const userRoute = require('./routes/api/users.js');
 const eventRoute = require('./routes/api/events.js');
 
 const port = process.env.PORT || 4000;
-const darkSkyAPI = process.env.darkSky;
+const darkSkyAPI = process.env.darkSkyAPI;
 
 var NodeGeocoder = require('node-geocoder');
 var options = {
