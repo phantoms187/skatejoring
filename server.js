@@ -17,7 +17,7 @@ const darkSkyAPI = process.env.darkSky || require("./config/keys").darkSkyAPI ;
 var NodeGeocoder = require('node-geocoder');
 var options = {
   provider: 'opencage',
-  apiKey: require("./config/keys").openCageAPI // for Mapquest, OpenCage, Google Premier
+  apiKey: require("./config/keys").openCageAPI || process.env.openCageAPI // for Mapquest, OpenCage, Google Premier
 };
 var geocoder = NodeGeocoder(options);
 
