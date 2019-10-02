@@ -56,7 +56,7 @@ class CreateEvent extends Component {
             time: moment(this.state.time, 'HH:mm a').format('h:mm A'),
           };
     
-    axios.post('https://35a7deb5f76e493e9412648419a0a663.vfs.cloud9.us-west-2.amazonaws.com/weather', place)
+    axios.post('/weather', place)
           .then(response => {
               this.setState({ 
                     weather: response.data.currently.summary, 
