@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 //Import the icons for DarkSky
 import Skycons from 'react-skycons';
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 //Class to construct table entries to show events 
 class EventTableRow extends Component {
@@ -18,9 +20,23 @@ class EventTableRow extends Component {
             window.location.reload();
     }
     
+   deleteButton(){
+      if (this.props.auth.isAuthenticated) 
+      {
+        return(
+          <td>
+              <Link to={"/events"} onClick={this.delete} className="btn btn-danger">Delete</Link>
+          </td>
+        );
+      }
+    }
+    
     render() {
         return (
             <tr>
+              <td>
+                {this.props.obj.name}
+              </td>
               <td>
                 {this.props.obj.date}
               </td>
@@ -36,15 +52,22 @@ class EventTableRow extends Component {
               <td>
                 <Skycons color='white' icon={this.props.obj.icon} width="64" height="64" autoplay={true} />
               </td>
+              {this.deleteButton()}
               
-              <td>
-                <Link to={"/events"} onClick={this.delete} className="btn btn-danger">Delete</Link>
-              </td>
+             
             
             </tr>
         );
     }
 }
 
-export default EventTableRow;
+EventTableRow.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+)(EventTableRow);
 

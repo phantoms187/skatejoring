@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import EventTableRow from './eventTableRow';
 import '../App.css';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+
 //Class to show all events
-export default class Events extends Component {
+class Events extends Component {
   constructor(props) {
       super(props);
       this.state = {events: []};
@@ -26,6 +30,13 @@ export default class Events extends Component {
           return <EventTableRow obj={object} key={i} />;
       });
     }
+    
+     actionCol(){
+      if (this.props.auth.isAuthenticated) 
+      {
+        return(<th>Action</th>);
+      }
+    }
 
 //Render results
     render() {
@@ -35,11 +46,12 @@ export default class Events extends Component {
           <table className="table table-striped table-hover table-bordered my-table">
             <thead>
               <tr>
+                <th>Event Name</th>
                 <th>Date</th>
                 <th>Time</th>
                 <th>Location</th>
                 <th colSpan="2">Weather</th>
-                <th>Action</th>
+                {this.actionCol()}
               </tr>
             </thead>
             <tbody>
@@ -60,3 +72,12 @@ export default class Events extends Component {
       );
     }
   }
+Events.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+)(Events);

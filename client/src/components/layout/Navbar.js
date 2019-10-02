@@ -17,9 +17,7 @@ class Navbar extends Component {
       if (!this.props.auth.isAuthenticated) 
       {
         return(<ul class="navbar-nav float-right">
-            <li class="nav-item">
-                <Link to={'/register'} className="nav-link my-nav-link">Email Signup</Link>
-            </li>
+            
             
             <li class="nav-item">
                 <Link to={'/login'} className="nav-link my-nav-link">Login</Link>
@@ -30,9 +28,15 @@ class Navbar extends Component {
       {
         return(
             <ul class="navbar-nav float-right">
+                
+                <li class="nav-item">
+                    <Link to={'/register'} className="nav-link my-nav-link">User Signup</Link>
+                </li>
+                
                 <li class="nav-item">
                     <Link to={'/createEvent'} className="nav-link my-nav-link">Add New Event</Link>
                 </li>
+                
                 <button
                     onClick={this.onLogoutClick}
                     className="btn btn-success"

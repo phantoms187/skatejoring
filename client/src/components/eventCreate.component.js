@@ -15,9 +15,13 @@ class CreateEvent extends Component {
       
       //Set current state to empty
       this.state = {
+          name: '',
           date: '',
           time: '',
-          location: '',
+          locationStreet: '',
+          locationCity: '',
+          locationState: '',
+          locationZip: '',
           errors: {}
       };
   }
@@ -42,9 +46,11 @@ class CreateEvent extends Component {
     e.preventDefault();
     
           const place = {
+            name: this.state.name,
             street: this.state.locationStreet,
             city: this.state.locationCity,
             state: this.state.locationState,
+            zip: this.state.locationZip,
             date: moment(this.state.date, 'YYYY-MM-DD').format('dddd, MMMM Do YYYY'),
             time: moment(this.state.time, 'HH:mm a').format('h:mm A'),
           };
@@ -61,7 +67,10 @@ class CreateEvent extends Component {
             const event = {
               date: moment(this.state.date, 'YYYY-MM-DD').format('dddd, MMMM Do YYYY'),
               time: moment(this.state.time, 'HH:mm a').format('h:mm A'),
-              location: this.state.locationStreet + " " + this.state.locationCity + ", " + this.state.locationState + " " + this.state.locationZip,
+              locationStreet: this.state.locationStreet,
+              locationCity: this.state.locationCity,
+              locationState: this.state.locationState,
+              locationZip: this.state.locationZip,
               weather: this.state.weather,
               icon: this.state.icon
             };
@@ -82,6 +91,16 @@ class CreateEvent extends Component {
             <div class="col-md-8 col-lg-6 offset-lg-3">
               <h3>Add New Event</h3>
               <form onSubmit={this.onSubmit}>
+              <div className="form-group">
+                      <label>Event Name:  </label>
+                      <input 
+                        type="text"
+                        id = "name"
+                        className="form-control" 
+                        value={this.state.name}
+                        onChange={this.onChange}
+                        />
+                  </div>
                   <div className="form-group">
                       <label>Date:  </label>
                       <input 
