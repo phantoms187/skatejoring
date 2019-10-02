@@ -31,7 +31,7 @@ class Index extends Component {
     }
     
     actionCol(){
-      if (!this.props.auth.isAuthenticated) 
+      if (this.props.auth.isAuthenticated) 
       {
         return(<th colSpan="2">Action</th>);
       }
@@ -48,7 +48,7 @@ class Index extends Component {
                 <th>Last Name</th>
                 <th>Phone Number</th>
                 <th>Email</th>
-                {this.actionCol}
+                {this.actionCol()}
               </tr>
             </thead>
             <tbody>
