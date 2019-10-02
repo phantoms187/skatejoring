@@ -7,10 +7,7 @@ module.exports = function validateRegisterInput(data) {
 // Convert empty fields to an empty string so we can use validator functions
   data.date = !isEmpty(data.date) ? data.date : "";
   data.time = !isEmpty(data.time) ? data.time : "";
-  data.locationStreet = !isEmpty(data.locationStreet) ? data.locationStreet : "";
-  data.locationCity = !isEmpty(data.locationCity) ? data.locationCity : "";
-  data.locationState = !isEmpty(data.locationState) ? data.locationState : "";
-  data.locationZip = !isEmpty(data.locationZip) ? data.locationZip : "";
+  data.location = !isEmpty(data.location) ? data.location : "";
   
   if (Validator.isEmpty(data.date)) {
     errors.name = "A date is required";
@@ -18,14 +15,10 @@ module.exports = function validateRegisterInput(data) {
   if (Validator.isEmpty(data.time)) {
     errors.name = "A time is required";
   }
-  if (Validator.isEmpty(data.locationCity)) {
+  if (Validator.isEmpty(data.location)) {
     errors.name = "A location is required";
   }
-  if (Validator.isEmpty(data.locationState)) {
-    errors.name = "A location is required";
-  }
-  
-  
+ 
   return {
     errors,
     isValid: isEmpty(errors)

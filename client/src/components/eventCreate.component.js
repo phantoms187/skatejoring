@@ -4,7 +4,8 @@ import moment from 'moment';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addEvent } from "../actions/eventActions";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+const isEmpty = require("is-empty");
 
 
 
@@ -46,11 +47,11 @@ class CreateEvent extends Component {
     e.preventDefault();
     
           const place = {
-            name: this.state.name,
-            street: this.state.locationStreet,
+            name: !isEmpty(this.state.name) ? this.state.name : "",
+            street: !isEmpty(this.state.locationStreet) ? this.state.locationStreet : "",
             city: this.state.locationCity,
             state: this.state.locationState,
-            zip: this.state.locationZip,
+            zip: !isEmpty(this.state.locationZip) ? this.state.locationZip : "",
             date: moment(this.state.date, 'YYYY-MM-DD').format('dddd, MMMM Do YYYY'),
             time: moment(this.state.time, 'HH:mm a').format('h:mm A'),
           };
@@ -65,12 +66,10 @@ class CreateEvent extends Component {
           .then( () =>{
             
             const event = {
+              name: this.state.name,
               date: moment(this.state.date, 'YYYY-MM-DD').format('dddd, MMMM Do YYYY'),
               time: moment(this.state.time, 'HH:mm a').format('h:mm A'),
-              locationStreet: this.state.locationStreet,
-              locationCity: this.state.locationCity,
-              locationState: this.state.locationState,
-              locationZip: this.state.locationZip,
+              location: this.state.locationStreet + " " + this.state.locationCity + ", " + this.state.locationState + " " + this.state.locationZip,
               weather: this.state.weather,
               icon: this.state.icon
             };
