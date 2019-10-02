@@ -11,7 +11,7 @@ export default class Events extends Component {
     
     //Get the events from mongoDB
     componentDidMount(){
-      axios.get('https://35a7deb5f76e493e9412648419a0a663.vfs.cloud9.us-west-2.amazonaws.com/events/all')
+      axios.get('/events/all')
         .then(response => {
           this.setState({ events: response.data });
         })
