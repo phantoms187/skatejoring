@@ -14,7 +14,7 @@ class EventTableRow extends Component {
     }
     //Function to send delete info from server
     delete() {
-        axios.get('https://35a7deb5f76e493e9412648419a0a663.vfs.cloud9.us-west-2.amazonaws.com/events/delete/'+this.props.obj._id)
+        axios.get('/events/delete/'+this.props.obj._id)
             .then(console.log('Deleted'))
             .catch(error => console.log(error));
             window.location.reload();
