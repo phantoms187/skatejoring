@@ -12,18 +12,17 @@ const userRoute = require('./routes/api/users.js');
 const eventRoute = require('./routes/api/events.js');
 
 const port = process.env.PORT || 4000;
-const darkSkyAPI = process.env.darkSky || require("./config/keys").darkSkyAPI ;
+const darkSkyAPI = process.env.darkSky;
 
 var NodeGeocoder = require('node-geocoder');
 var options = {
   provider: 'opencage',
-  apiKey: require("./config/keys").openCageAPI || process.env.openCageAPI // for Mapquest, OpenCage, Google Premier
+  apiKey: process.env.openCageAPI // for Mapquest, OpenCage, Google Premier
 };
 var geocoder = NodeGeocoder(options);
 
-const db = require("./config/keys").mongoURI;
 mongoose.set('useCreateIndex', true);
-mongoose.connect((process.env.MONGODB_URI || db), { useNewUrlParser: true }).then(
+mongoose.connect((process.env.MONGODB_URI), { useNewUrlParser: true }).then(
   () => {console.log('Database is connected') },
   err => { console.log('Can not connect to the database'+ err)}
 );
