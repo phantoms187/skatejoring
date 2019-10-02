@@ -54,7 +54,7 @@ class Login extends Component {
   };
  //Render form for create 
   render() {
-    const { errors } = this.state;
+    //const { errors } = this.state;
   
     return (
         <div class="title-welcome container">
