@@ -1,0 +1,49 @@
+
+#root{
+  background-color: #FFBF00;
+  height: 100%;
+}
+
+.title-welcome{
+  text-align: center;
+  color: white;
+}
+
+.center {
+  display: inline-block;
+  margin: auto;
+}
+
+.my-nav-link:hover{
+  border-bottom: 2px solid #64fa14 !important;
+}
+
+.title-welcome div {
+  text-align: left;
+}
+
+.nav-bkgr{
+  background-color: #595858 !important;
+  height: 50px !important;
+}
+
+.green-bkgr{
+  
+  background-color: #000000;
+  margin: auto;
+}
+
+img {
+  margin:auto;
+}
+
+.my-table{
+  background-color: #32a852;
+  color: white;
+  text-align: center;
+}
+
+.text-white{
+  color: white;
+}
+
