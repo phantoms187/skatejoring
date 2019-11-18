@@ -20,6 +20,11 @@ import Navbar from "./components/layout/Navbar";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 
+import Container from "react-bootstrap/Container";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -47,39 +52,37 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <div className="container green-bkgr">
-         <Navbar />
-          <br/>
-          <br/>
-          <br/>
+          <Container className="green-bkgr">
+          
+            <Navbar />
+        
             <h2 class= "title-welcome">Skatejoring Social Club</h2>
-          <br/>
-            
-            <Route exact path='/login' component={ Login } />
-            <Route exact path='/events' component={ Events } />
-            <Route exact path='/register' component={ Register } />
-            <Route exact path='/index' component={ Index } />
-            <Route path='/edit/:id' component={ Edit } />
-            
+            <Row>
             <Switch>
+            
+              <Route exact path='/login' component={ Login } />
+              <Route exact path='/events' component={ Events } />
+              <Route exact path='/index' component={ Index } />
+           
               <PrivateRoute> 
                 <PrivateRoute exact path='/dashboard' component={ Dashboard } />
                 <PrivateRoute exact path='/createEvent' component={ CreateEvent } />
+                <PrivateRoute exact path='/register' component={ Register } />
+                <PrivateRoute path='/edit/:id' component={ Edit } />
               </PrivateRoute>
+           
+             <Route exact path='/' component={ Home } />
             </Switch>
+             
             
-            <Route exact path='/' component={ Home } />
             
-            <footer class="container">
-              <p class="text-white">&copy; 2019 DW Designs         <a href="https://darksky.net/poweredby/"> Powered by Dark Sky</a></p>
+            <footer>
+              <p class="footer">&copy; 2019 DW Designs         <a href="https://darksky.net/poweredby/"> Powered by Dark Sky</a></p>
             </footer>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          </div>
+           
+            </Row>
+          </Container>
+         
         </Router>
       </Provider>
 

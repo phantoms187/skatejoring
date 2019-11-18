@@ -1,12 +1,19 @@
 
 #root{
+  background-size: cover;
   background-color: #FFBF00;
   height: 100%;
 }
 
+html, body, #app, #app>div {
+  height: 100%
+}
+
 .title-welcome{
   text-align: center;
-  color: white;
+  color: green;
+  padding: 10px;
+  margin: 10px;
 }
 
 .center {
@@ -31,6 +38,7 @@
   
   background-color: #000000;
   margin: auto;
+  height: 100%;
 }
 
 img {
@@ -45,5 +53,15 @@ img {
 
 .text-white{
   color: white;
+  margin: auto;
+  height: 100%;
+}
+
+.footer{
+  color: white;
+  margin: auto;
+  height: 100%;
+  text-align: right;
+  
 }
 
