@@ -12,16 +12,16 @@ const userRoute = require('./routes/api/users.js');
 const eventRoute = require('./routes/api/events.js');
 
 const port = process.env.PORT || 4000;
-const darkSkyAPI = process.env.darkSky || require("./config/keys").darkSkyAPI ;
+const darkSkyAPI = process.env.darkSky;// || require("./config/keys").darkSkyAPI ;
 
 var NodeGeocoder = require('node-geocoder');
 var options = {
   provider: 'opencage',
-  apiKey: require("./config/keys").openCageAPI || process.env.openCageAPI // for Mapquest, OpenCage, Google Premier
+  apiKey: process.env.openCageAPI// require("./config/keys").openCageAPI || process.env.openCageAPI // for Mapquest, OpenCage, Google Premier
 };
 var geocoder = NodeGeocoder(options);
 
-const db = require("./config/keys").mongoURI;
+const db = process.env.openCageAPI;//require("./config/keys").mongoURI;
 mongoose.set('useCreateIndex', true);
 mongoose.connect((process.env.MONGODB_URI || db), { useNewUrlParser: true }).then(
   () => {console.log('Database is connected') },
@@ -37,6 +37,7 @@ require("./config/passport")(passport);
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 
 app.post('/weather', (req, res) => {
@@ -72,15 +73,12 @@ app.post('/weather', (req, res) => {
 
 app.use('/users', userRoute);
 app.use('/events', eventRoute);
-
-if (process.env.NODE_ENV === 'production') {
-    
-    app.use(express.static(path.join(__dirname, 'client/build')));
+   
 
     app.get("/*", (req, res) => {
         res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
-}
+
 
 
 app.listen(port, () =>{
