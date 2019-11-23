@@ -12,16 +12,16 @@ const userRoute = require('./routes/api/users.js');
 const eventRoute = require('./routes/api/events.js');
 
 const port = process.env.PORT || 4000;
-const darkSkyAPI = process.env.darkSky;// || require("./config/keys").darkSkyAPI ;
+const darkSkyAPI = process.env.darkSky || require("./config/keys").darkSkyAPI ;
 
 var NodeGeocoder = require('node-geocoder');
 var options = {
   provider: 'opencage',
-  apiKey: process.env.openCageAPI// require("./config/keys").openCageAPI || process.env.openCageAPI // for Mapquest, OpenCage, Google Premier
+  apiKey: process.env.openCageAPI || require("./config/keys").openCageAPI // for Mapquest, OpenCage, Google Premier
 };
 var geocoder = NodeGeocoder(options);
 
-const db = process.env.openCageAPI;//require("./config/keys").mongoURI;
+const db = process.env.openCageAPI || require("./config/keys").mongoURI;
 mongoose.set('useCreateIndex', true);
 mongoose.connect((process.env.MONGODB_URI || db), { useNewUrlParser: true }).then(
   () => {console.log('Database is connected') },
@@ -41,13 +41,13 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 
 app.post('/weather', (req, res) => {
-     
+
     let lat = '';
     let long = '';
     let place = req.body.street + " " + req.body.city + ", " + req.body.state + " " + req.body.zip;
     let time = moment(req.body.date + " " + req.body.time, 'dddd, MMMM Do YYYY h:mm A').unix();
-    
-    function getCoordinates(place) { 
+
+    function getCoordinates(place) {
         return new Promise((resolve, reject) => {
             geocoder.geocode(place, function(err,res) {
                 if(err)
@@ -57,7 +57,7 @@ app.post('/weather', (req, res) => {
                 });
         });
     }
-    
+
     (async () => {
       const geoCoordinates = await getCoordinates(place);
         lat = geoCoordinates[0].latitude;
@@ -73,7 +73,7 @@ app.post('/weather', (req, res) => {
 
 app.use('/users', userRoute);
 app.use('/events', eventRoute);
-   
+
 
     app.get("/*", (req, res) => {
         res.sendFile(path.join(__dirname, './client/build/index.html'));
@@ -84,9 +84,3 @@ app.use('/events', eventRoute);
 app.listen(port, () =>{
   console.log('Server is running on Port:', port);
 });
-
-
-
-
-
-

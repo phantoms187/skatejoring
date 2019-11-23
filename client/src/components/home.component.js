@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 export default class Home extends Component {
      render() {
         return (
-          
+
           <Container>
             <Row>
              <Col xs={{ span: 8, offset: 2 }}>
@@ -16,7 +16,7 @@ export default class Home extends Component {
                   <Carousel.Item>
                     <img
                       className="d-block mx-auto p-3 my-auto img-fluid"
-                      src="/mia_glow.png"
+                      src="/client/public/mia_glow.png"
                       alt="First slide"
                     />
                     <br/>
@@ -26,7 +26,7 @@ export default class Home extends Component {
                       <p>Join us at our next event!</p>
                     </Carousel.Caption>
                   </Carousel.Item>
-                  
+
                   <Carousel.Item>
                     <img
                       className="d-block text-center mx-auto p-3 my-auto img-fluid"
@@ -59,5 +59,5 @@ export default class Home extends Component {
             </Container>
         );
     }
-    
+
 }
