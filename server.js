@@ -21,7 +21,7 @@ var options = {
 };
 var geocoder = NodeGeocoder(options);
 
-const db = process.env.openCageAPI || require("./config/keys").mongoURI;
+const db = process.env.mongoURI || require("./config/keys").mongoURI;
 mongoose.set('useCreateIndex', true);
 mongoose.connect((process.env.MONGODB_URI || db), { useNewUrlParser: true }).then(
   () => {console.log('Database is connected') },
