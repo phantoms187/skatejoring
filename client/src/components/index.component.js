@@ -29,9 +29,9 @@ class Index extends Component {
           return <TableRow obj={object} key={i} />;
       });
     }
-    
+
     actionCol(){
-      if (this.props.auth.isAuthenticated) 
+      if (this.props.auth.isAuthenticated)
       {
         return(<th colSpan="2">Action</th>);
       }
